@@ -1,0 +1,198 @@
+[3:12 PM] Maria (Unverified)
+module JunitTest {
+	requires org.junit.jupiter.api;
+	requires junit;
+	requires org.junit.platform.suite.api;
+	
+}
+[3:15 PM] Maria (Unverified)
+	
+public int square(int a) {
+	return a*a;
+}
+ 
+ 
+public int countA(String s) {//Maria - 2,output
+	int count=0;
+	for(int i=0;i<s.length();i++) {
+		if(s.charAt(i)=='a' || s.charAt(i)=='A'){
+			count=count+1;
+		}		
+	}
+	return count;
+	
+}
+ 
+ 
+public boolean ageCheck(int age) {
+	if(age<20)
+		return true;
+	else
+		return false;
+}
+ 
+ 
+public String nullCheck(String s) {
+	if((s.equals("")) && (s!=null))
+		return "";
+	else  
+		return s;
+}
+[3:27 PM] Maria (Unverified)
+aaa
+[3:27 PM] Maria (Unverified)
+	JunitTesting test=new JunitTesting();
+		int output=test.square(5);
+		assertEquals(25, output);
+	   // assertNotEquals(26, output);
+[3:29 PM] Maria (Unverified)
+aaaa
+[3:29 PM] Maria (Unverified)
+package com.test;
+// Junit is a unit testing framework for Java
+public class JunitTesting {
+	
+	
+public int square(int a) {
+	return a*a;
+}
+ 
+ 
+public int countA(String s) {//Maria - 2,output
+	int count=0;
+	for(int i=0;i<s.length();i++) {
+		if(s.charAt(i)=='a' || s.charAt(i)=='A'){
+			count=count+1;
+		}		
+	}
+	return count;
+	
+}
+ 
+ 
+public boolean ageCheck(int age) {
+	if(age<20)
+		return true;
+	else
+		return false;
+}
+ 
+ 
+public String nullCheck(String s) {
+	if((s.equals("")) && (s!=null))
+		return "";
+	else  
+		return s;
+}
+ 
+}
+ 
+[3:29 PM] Maria (Unverified)
+aaaa
+[3:29 PM] Maria (Unverified)
+package com.test;
+ 
+import static org.junit.jupiter.api.Assertions.*;
+ 
+import org.junit.jupiter.api.Test;
+ 
+class TestCharCount {
+ 
+	@Test
+
+	void test() {
+
+		JunitTesting test=new JunitTesting();
+
+		int output=test.countA("Janani");
+
+	assertEquals(2, output);
+
+	}
+ 
+}
+
+[3:29 PM] Maria (Unverified)
+lll
+[3:29 PM] Maria (Unverified)
+package com.test;
+ 
+import static org.junit.jupiter.api.Assertions.*;
+ 
+import org.junit.jupiter.api.Test;
+ 
+class TestNullCheck {
+ 
+	@Test
+
+	void test() {
+
+		JunitTesting test=new JunitTesting();
+
+		String nullString=null;
+
+		String notNullString="Maria";
+
+		assertNull(nullString);
+
+		//assertNotNull(notNullString);
+
+	}
+ 
+}
+
+[3:30 PM] Maria (Unverified)
+aaa
+[3:30 PM] Maria (Unverified)
+package com.test;
+ 
+import static org.junit.jupiter.api.Assertions.*;
+ 
+import org.junit.jupiter.api.Test;
+ 
+class SquareTest {
+ 
+	@Test
+
+	void test() {
+
+		JunitTesting test=new JunitTesting();
+
+		int output=test.square(5);
+
+		assertEquals(25, output);
+
+	   // assertNotEquals(26, output);
+
+	}
+ 
+}
+
+[3:30 PM] Maria (Unverified)
+aaa
+[3:30 PM] Maria (Unverified)
+package com.test;
+ 
+import static org.junit.jupiter.api.Assertions.*;
+ 
+import org.junit.jupiter.api.Test;
+ 
+class TestNullCheck {
+ 
+	@Test
+
+	void test() {
+
+		JunitTesting test=new JunitTesting();
+
+		String nullString=null;
+
+		String notNullString="Maria";
+
+		assertNull(nullString);
+
+		//assertNotNull(notNullString);
+
+	}
+ 
+}

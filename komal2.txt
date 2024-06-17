@@ -1,0 +1,166 @@
+import java.util.LinkedList;
+
+class ShoppingCart {
+    private LinkedList<String> cart;
+
+    public ShoppingCart() {
+        cart = new LinkedList<>();
+    }
+
+    // Add an item to the cart
+    public void addItem(String item) {
+        cart.add(item);
+        System.out.println(item + " added to the cart.");
+    }
+
+    // Remove an item from the cart
+    public void removeItem(String item) {
+        if (cart.remove(item)) {
+            System.out.println(item + " removed from the cart.");
+        } else {
+            System.out.println(item + " not found in the cart.");
+        }
+    }
+
+    // View all items in the cart
+    public void viewCart() {
+        if (cart.isEmpty()) {
+            System.out.println("The cart is empty.");
+        } else {
+            System.out.println("Items in the cart:");
+            for (String item : cart) {
+                System.out.println("- " + item);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+import java.util.LinkedList;
+import java.util.Stack;
+
+class PurchaseHistory {
+    private Stack<LinkedList<String>> history;
+
+    public PurchaseHistory() {
+        history = new Stack<>();
+    }
+
+    // Save the current cart to purchase history
+    public void savePurchase(LinkedList<String> cart) {
+        LinkedList<String> cartCopy = new LinkedList<>(cart);
+        history.push(cartCopy);
+        System.out.println("Purchase saved.");
+    }
+
+    // Undo the last purchase
+    public LinkedList<String> undoLastPurchase() {
+        if (!history.isEmpty()) {
+            System.out.println("Last purchase undone.");
+            return history.pop();
+        } else {
+            System.out.println("No purchases to undo.");
+            return new LinkedList<>();
+        }
+    }
+
+    // View the entire purchase history
+    public void viewHistory() {
+        if (history.isEmpty()) {
+            System.out.println("No purchase history.");
+        } else {
+            System.out.println("Purchase history:");
+            for (LinkedList<String> purchase : history) {
+                System.out.println(purchase);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class CustomerService {
+    private Queue<String> serviceRequests;
+
+    public CustomerService() {
+        serviceRequests = new LinkedList<>();
+    }
+
+    // Add a customer service request
+    public void addRequest(String request) {
+        serviceRequests.add(request);
+        System.out.println("Service request added: " + request);
+    }
+
+    // Process the next customer service request
+    public void processRequest() {
+        if (!serviceRequests.isEmpty()) {
+            String request = serviceRequests.poll();
+            System.out.println("Processing request: " + request);
+        } else {
+            System.out.println("No pending service requests.");
+        }
+    }
+
+    // View pending customer service requests
+    public void viewRequests() {
+        if (serviceRequests.isEmpty()) {
+            System.out.println("No pending service requests.");
+        } else {
+            System.out.println("Pending service requests:");
+            for (String request : serviceRequests) {
+                System.out.println("- " + request);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+public class ShoppingApp {
+    public static void main(String[] args) {
+        ShoppingCart cart = new ShoppingCart();
+        PurchaseHistory history = new PurchaseHistory();
+        CustomerService service = new CustomerService();
+
+        // Shopping cart operations
+        cart.addItem("Apple");
+        cart.addItem("Banana");
+        cart.viewCart();
+        cart.removeItem("Apple");
+        cart.viewCart();
+
+        // Purchase history operations
+        history.savePurchase(cart.cart);
+        cart.addItem("Orange");
+        cart.viewCart();
+        history.savePurchase(cart.cart);
+        history.viewHistory();
+        LinkedList<String> lastCart = history.undoLastPurchase();
+        cart.cart = lastCart;
+        cart.viewCart();
+
+        // Customer service operations
+        service.addRequest("Refund request for order #1234");
+        service.addRequest("Inquiry about product #5678");
+        service.viewRequests();
+        service.processRequest();
+        service.viewRequests();
+    }
+}

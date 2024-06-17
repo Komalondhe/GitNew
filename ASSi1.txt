@@ -1,0 +1,130 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class ListStackQueue {
+    private LinkedList<String> shoppingCart;
+    private Stack<LinkedList<String>> purchaseHistory;
+    private Queue<String> customerServiceRequests;
+
+    public ListStackQueue() {
+        this.shoppingCart = new LinkedList<>();
+        this.purchaseHistory = new Stack<>();
+        this.customerServiceRequests = new LinkedList<>();
+    }
+
+    // Shopping Cart methods
+    public void addItemToCart(String item) {
+        shoppingCart.add(item);
+    }
+
+    public void removeItemFromCart(String item) {
+        shoppingCart.remove(item);
+    }
+
+    public void viewCart() {
+        System.out.println("Items in the shopping cart:");
+        for (String item : shoppingCart) {
+            System.out.println(item);
+        }
+    }
+
+    // Purchase History methods
+    public void addToHistory() {
+        LinkedList<String> currentCart = new LinkedList<>(shoppingCart);
+        purchaseHistory.push(currentCart);
+    }
+
+    public void undoLastPurchase() {
+        if (!purchaseHistory.isEmpty()) {
+            shoppingCart = purchaseHistory.pop();
+            System.out.println("Last purchase undone.");
+        } else {
+            System.out.println("No purchase history to undo.");
+        }
+    }
+
+    public void viewPurchaseHistory() {
+        System.out.println("Purchase history:");
+        for (LinkedList<String> cart : purchaseHistory) {
+            System.out.println(cart);
+        }
+    }
+
+    // Customer Service methods
+    public void addCustomerServiceRequest(String request) {
+        customerServiceRequests.offer(request);
+    }
+
+    public void processNextRequest() {
+        if (!customerServiceRequests.isEmpty()) {
+            String request = customerServiceRequests.poll();
+            System.out.println("Processing request: " + request);
+        } else {
+            System.out.println("No pending customer service requests.");
+        }
+    }
+
+    public void viewPendingRequests() {
+        System.out.println("Pending customer service requests:");
+        for (String request : customerServiceRequests) {
+            System.out.println(request);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+public class Search {
+
+    public static boolean searchItem(ListStackQueue listStackQueue, String item) {
+        if (listStackQueue != null && item != null) {
+            return listStackQueue.getShoppingCart().contains(item);
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        ListStackQueue listStackQueue = new ListStackQueue();
+        listStackQueue.addItemToCart("milk");
+        listStackQueue.addItemToCart("bread");
+        System.out.println("Item found in cart: " + searchItem(listStackQueue, "milk"));
+        System.out.println("Item found in cart: " + searchItem(listStackQueue, "juice"));
+    }
+}
+
+
+
+
+
+
+
+
+public class ShoppingApp {
+    public static void main(String[] args) {
+        ListStackQueue app = new ListStackQueue();
+
+        // Shopping cart operations
+        app.addItemToCart("Shoes");
+        app.addItemToCart("T-shirt");
+        app.viewCart();
+        app.removeItemFromCart("Shoes");
+        app.viewCart();
+
+        // Purchase history operations
+        app.addToHistory();
+        app.undoLastPurchase();
+        app.viewPurchaseHistory();
+
+        // Customer service operations
+        app.addCustomerServiceRequest("Issue with payment");
+        app.viewPendingRequests();
+        app.processNextRequest();
+        app.viewPendingRequests();
+    }
+}

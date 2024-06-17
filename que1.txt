@@ -1,0 +1,138 @@
+[2:17 PM, 6/17/2024] +91 99123 61920: package imps;
+
+//File: Library.java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Library {
+ private List<Book> books;
+
+ public Library() {
+     books = new ArrayList<>();
+ }
+
+ // Add a book to the library
+ public void addBook(Book book) {
+     books.add(book);
+     Collections.sort(books);  // Keep books sorted by title for Binary Search
+ }
+
+ // Remove a book from the library
+ public void removeBook(String ISBN) {
+     books.removeIf(book -> book.getISBN().equals(ISBN));
+ }
+
+ // Display all books in the library
+ public void displayBooks() {
+     for (Book book : books) {
+         System.out.println(book);
+     }
+ }
+
+ // Linear Search for a book by title
+ public Book linearSearch(String title) {
+     for (Book book : books) {
+         if (book.getTitle().equalsIgnoreCase(title)) {
+             return book;
+         }
+     }
+     return null;
+ }
+
+ // Binary Search for a book by title
+ public Book binarySearch(String title) {
+     int left = 0;
+     int right = books.size() - 1;
+
+     while (left <= right) {
+         int mid = (left + right) / 2;
+         Book midBook = books.get(mid);
+         int compareResult = midBook.getTitle().compareToIgnoreCase(title);
+
+         if (compareResult == 0) {
+             return midBook;
+         } else if (compareResult < 0) {
+             left = mid + 1;
+         } else {
+             right = mid - 1;
+         }
+     }
+     return null;
+ }
+
+ public static void main(String[] args) {
+     Library library = new Library();
+
+     library.addBook(new Book("Effective Java", "Joshua Bloch", "9780134685991"));
+     library.addBook(new Book("Clean Code", "Robert C. Martin", "9780132350884"));
+     library.addBook(new Book("The Pragmatic Programmer", "Andrew Hunt", "9780201616224"));
+
+     System.out.println("All books in the library:");
+     library.displayBooks();
+
+     System.out.println("\nSearching for 'Clean Code' using Linear Search:");
+     Book foundBookLinear = library.linearSearch("Clean Code");
+     System.out.println(foundBookLinear != null ? foundBookLinear : "Book not found");
+
+     System.out.println("\nSearching for 'Clean Code' using Binary Search:");
+     Book foundBookBinary = library.binarySearch("Clean Code");
+     System.out.println(foundBookBinary != null ? foundBookBinary : "Book not found");
+
+     library.removeBook("9780132350884");
+     System.out.println("\nAll books in the library after removing 'Clean Code':");
+     library.displayBooks();
+ }
+}
+[2:17 PM, 6/17/2024] +91 99123 61920: package imps;
+
+//File: Book.java
+public class Book implements Comparable<Book> {
+ private String title;
+ private String author;
+ private String ISBN;
+
+ public Book(String title, String author, String ISBN) {
+     this.title = title;
+     this.author = author;
+     this.ISBN = ISBN;
+ }
+
+ public String getTitle() {
+     return title;
+ }
+
+ public void setTitle(String title) {
+     this.title = title;
+ }
+
+ public String getAuthor() {
+     return author;
+ }
+
+ public void setAuthor(String author) {
+     this.author = author;
+ }
+
+ public String getISBN() {
+     return ISBN;
+ }
+
+ public void setISBN(String ISBN) {
+     this.ISBN = ISBN;
+ }
+
+ @Override
+ public int compareTo(Book other) {
+     return this.title.compareTo(other.title);
+ }
+
+ @Override
+ public String toString() {
+     return "Book{" +
+             "title='" + title + '\'' +
+             ", author='" + author + '\'' +
+             ", ISBN='" + ISBN + '\'' +
+             '}';
+ }
+}

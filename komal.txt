@@ -1,0 +1,158 @@
+package com.Assesment2;
+public class Book implements Comparable<Book> {
+    private String title;
+    private String author;
+    private String ISBN;
+
+    public Book(String title, String author, String ISBN) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        return this.title.compareTo(other.title);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                '}';
+    }
+}
+
+
+
+
+
+
+
+
+package com.Assesment2;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Library {
+    private List<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+        Collections.sort(books); // Ensure the list is sorted for Binary Search
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+    }
+
+    public List<Book> getAllBooks() {
+        return books;
+    }
+
+    public Book linearSearch(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public Book binarySearch(String title) {
+        int left = 0;
+        int right = books.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            Book midBook = books.get(mid);
+            int cmp = midBook.getTitle().compareToIgnoreCase(title);
+
+            if (cmp == 0) {
+                return midBook;
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+package com.Assesment2;
+public class LibraryManagementSystem {
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        // Adding books to the library
+        library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", "123456789"));
+        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "987654321"));
+        library.addBook(new Book("1984", "George Orwell", "111222333"));
+
+        // Display all books
+        System.out.println("All books in the library:");
+        for (Book book : library.getAllBooks()) {
+            System.out.println(book);
+        }
+
+        // Linear Search
+        System.out.println("\nLinear Search:");
+        Book linearSearchResult = library.linearSearch("1984");
+        if (linearSearchResult != null) {
+            System.out.println("Found: " + linearSearchResult);
+        } else {
+            System.out.println("Book not found.");
+        }
+
+        // Binary Search
+        System.out.println("\nBinary Search:");
+        Book binarySearchResult = library.binarySearch("1984");
+        if (binarySearchResult != null) {
+            System.out.println("Found: " + binarySearchResult);
+        } else {
+            System.out.println("Book not found.");
+        }
+
+        // Compare search performance – linear & binary
+        // Note: For a detailed performance comparison, we would need to measure the time taken for each search method on a larger dataset.
+    }
+}
